@@ -1,7 +1,8 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { FaFacebookF, FaInstagram, FaWhatsapp, FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FaFacebookF, FaInstagram, FaWhatsapp,FaShoppingBag } from 'react-icons/fa';
 
 function Header() {
   return (
@@ -21,14 +22,18 @@ function Header() {
           </p>
         </Col>
 
+        <Col xs={2} className="">  
+        </Col>
+
         {/* Right Side - Search Bar with Icon */}
-        <Col xs={3} className="flex justify-end relative">
-          <input 
-            type="text" 
-            placeholder="Search..." 
-            className="p-2 w-full max-w-[220px] h-[34px] border rounded-full focus:outline-none pr-10"
-          />
-          <FaSearch className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-500" />
+        <Col xs={1} className="flex justify-end relative">
+        <Link
+                className="mx-auto text-decoration-none"
+                to="/CART"
+              >
+                <FaShoppingBag className="text-xl cursor-pointer text-white" />
+              </Link>
+          
         </Col>
       </Row>
 

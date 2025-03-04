@@ -24,7 +24,9 @@ import Dryness from './Dryness';
 import DarkSpots from './DarkSpots';
 import HealthyAging from './HealthyAging';
 import Description from './Description'
-import MyBag from './Cart';
+// import MyBag from './Bag';
+import Checkout from './Checkout';
+import Cart from './Cart';
 
 
 function App() {
@@ -54,6 +56,8 @@ function App() {
 
       <Route path="/description" element={<Description />}></Route>
       {/* <Route path="/BAG" element={<MyBag />}></Route> */}
+      <Route path="/checkout" element={<Checkout />}></Route>
+      <Route path="/CART" element={<Cart />}></Route>
 
       <Route path="/BUNDLES" element={<Bundles />}></Route>
       <Route path="/ABOUTUS" element={<AboutUs />}></Route>
@@ -63,11 +67,6 @@ function App() {
       <Route path="/RefundPolicy" element={<RefundPolicy />}></Route>
       <Route path="/ShippingPolicy" element={<ShippingPolicy />}></Route>
 
-      {/* <Route path="/NewArrivals/UnStitched-Collection" element={<UnStitched_Collection />}></Route>
-      <Route path="/NewArrivals/UnStitched-Collection/Cloth" element={<UnStitched />}></Route>
-      <Route path="/Cast-and-Crew" element={<CastandCrew />}></Route>
-      <Route path="/Women" element={<Women />}></Route>
-      <Route path="/Men" element={<Men />}></Route> */}
     </Routes>
 
     <br />

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Offcanvas, Container, Row, Col, Button, Card, Image, Form } from "react-bootstrap";
 import { FaStar, FaHeart, FaShoppingCart, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
@@ -22,6 +24,12 @@ function Description() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const images = product?.images || [];
+
+  const navigate = useNavigate();
+
+  const handleBuyNow = () => {
+    navigate("/checkout", { state: { product } }); // Ensure data is wrapped in an object
+  };
 
   const relatedProducts = [
     {
@@ -181,9 +189,15 @@ function Description() {
             </Row>
             <Row>
               <Col>
-                <Button style={{ backgroundColor: "#fbb6ce", color: "white", fontWeight: "bold", width: "100%", border: "none", borderRadius: "50px", padding: "10px" }}>
-                  BUY IT NOW
-                </Button>
+
+                <Link to="/checkout" state={{ product }}>
+
+                  <Button onClick={handleBuyNow} style={{ backgroundColor: "#fbb6ce", color: "white", fontWeight: "bold", width: "100%", border: "none", borderRadius: "50px", padding: "10px" }}>
+                    BUY IT NOW
+                  </Button>
+
+                </Link>
+
               </Col>
             </Row>
           </Col>
@@ -361,12 +375,19 @@ function Description() {
               </Row>
 
               {/* Buttons */}
-              <Button className="w-100 mb-2" style={{ backgroundColor: '#F8A8C2', border: 'none', fontWeight: "bold" }}>
-                CHECKOUT
-              </Button>
-              <Button className="w-100" style={{ backgroundColor: '#F8A8C2', border: 'none', fontWeight: "bold" }}>
-                VIEW CART
-              </Button>
+              {/* Buttons */}
+              <Link to="/checkout" className="w-100" state={{ product }}>
+                <Button onClick={handleBuyNow} className="w-100 mb-2" style={{ backgroundColor: '#F8A8C2', border: 'none', fontWeight: "bold" }}>
+                  CHECKOUT
+                </Button>
+              </Link>
+
+              <Link to="/CART" className="w-100" state={{ product }}>
+                <Button onClick={handleBuyNow} className="w-100" style={{ backgroundColor: '#F8A8C2', border: 'none', fontWeight: "bold" }}>
+                  VIEW CART
+                </Button>
+              </Link>
+
             </Container>
           </Offcanvas.Body>
         </Offcanvas>

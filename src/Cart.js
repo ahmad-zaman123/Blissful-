@@ -1,128 +1,117 @@
-import React, { useState } from "react";
-import { Offcanvas, Button, Container, Row, Col, Image } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { X } from 'lucide-react';
+import React from "react";
+import { useLocation,useState } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
 
-const MyBag = () => {
-    const [show, setShow] = useState(false);
+function Cart() {
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+  const location = useLocation();
+    const { product } = location.state || {}; // Extract product from state
 
-    return (
-        <>
-            <Button variant="dark" onClick={handleShow} className="mt-3">
-                Open Cart
-            </Button>
+    const navigate = useNavigate();
+  
+    if (!product) {
+      return <div>No product selected.</div>;
+    }
 
-            <Offcanvas show={show} onHide={handleClose} placement="end">
-                <Offcanvas.Header className="border-bottom" style={{ padding: '15px', fontWeight: 'bold' }}>
-                    <div className="w-100 d-flex justify-content-between align-items-center">
-                        <span style={{ fontSize: '18px' }}>Shopping Cart</span>
-                        <X size={20} onClick={handleClose} style={{ cursor: 'pointer' }} />
-                    </div>
-                </Offcanvas.Header>
+    const handleBuyNow = () => {
+      navigate("/checkout", { state: { product } }); // Ensure data is wrapped in an object
+    };
 
-                <Offcanvas.Body>
-                    <Container>
-                        {/* Item */}
-                        <Row className="mb-3 align-items-center">
-                            <Col xs={4}>
-                                <Image
-                                    src="https://www.junaidjamshed.com/media/catalog/product/2/4/24-1799_1_.jpg"
-                                    fluid
-                                    rounded
-                                />
-                            </Col>
-                            <Col xs={8}>
+  return (
+    <Container className="py-5">
+      <Row className="justify-content-center">
+        {/* Empty Space for Balance */}
+        {/* <Col xs={12} lg={1}></Col> */}
 
+        {/* Left Section - Product Table */}
+        <Col xs={12} md={8} className="bg-white p-4">
+          <h4 className="fw-bold mb-4">YOUR CART</h4>
 
-                                <p style={{ fontSize: '14px', marginBottom: '5px' }}>
-                                    Mega Bundle (Oily And Combination Skin)
-                                </p>
-                                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                    <div style={{ textDecoration: 'line-through', fontWeight: 'bold', fontSize: '12px', marginRight: '10px' }}>
-                                        Rs.16,300.00
-                                    </div>
+          {/* Product Table */}
+          <Table className="text-center align-middle" style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}>
+            <thead style={{ height: "60px", backgroundColor: "#d3d3d3" }}>
+              <tr style={{backgroundColor:"green"}}>
+                <th className="text-start ps-3">PRODUCT</th>
+                <th>PRICE</th>
+                <th>QUANTITY</th>
+                <th>TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                  style={{
+                  border: "1px solid grey",
+                }}
+              >
+                <td className="d-flex align-items-center">
+                  <img
+                    src={product.img}
+                    className="img-fluid me-3"
+                    style={{ width: "85px", height: "120px" }}
+                  />
+                  <div>
+                    <p className="mb-0 fw-medium">{product.product_name}</p><br />
+                    <p className="text-muted small">30ml</p>
+                  </div>
+                </td>
+                <td className="fw-semibold" style={{fontSize:"15px"}}>Rs {product.newprice}</td>
+                <td className="text-center " style={{ verticalAlign: "middle"}}>
+                  <div className="d-flex align-items-center justify-content-center" style={{border:"1px solid grey",width:"100px", marginLeft:"28px"}}>
+                    <Button variant="outline-dark" size="xl" style={{border:"none"}}>-</Button>
+                    <span className="mx-2" style={{border:"none"}}>1</span>
+                    <Button variant="outline-dark" size="xl" style={{border:"none"}}>+</Button>
+                  </div>
+                </td>
+                <td className="fw-semibold" style={{fontSize:"15px"}}>Rs {product.newprice} </td>
+              </tr>
+            </tbody>
+          </Table>
 
-                                    <div style={{ fontSize: '14px', color: '#F8A8C2', fontWeight: 'bold' }}>
-                                        Rs.13,813.00
-                                    </div>
-                                </div>
+          {/* Additional Comments */}
+          <Form.Group controlId="additionalComments">
+            <Form.Label className="fw-medium">Additional Comments</Form.Label>
+            <Form.Control as="textarea" rows={3} placeholder="Special instructions for seller..." />
+          </Form.Group>
+        </Col>
 
-                                <br />
+        {/* Right Section - Order Summary */}
+        <Col xs={12} md={4} className="bg-white p-4">
+          <h4 className="fw-bold pb-2">ORDER SUMMARY</h4>
+          <Row className="mt-3 mb-3 border-top border-bottom border-secondary d-flex align-items-center justify-content-between py-2" style={{ height: "70px" }}>
+            <Col className="fw-bold">Subtotal</Col>
+            <Col className="text-end fw-bold">Rs.2,200.00</Col>
+          </Row>
+          <Form.Group controlId="couponCode" className="mt-4 mb-4">
+            <Form.Label>Coupon Code</Form.Label>
+            <Form.Control type="text" placeholder="Enter Coupon Code" />
+            <small className="text-muted">Coupon code will be applied on the checkout page</small>
+          </Form.Group>
+          <Row className="mt-3">
+            <Col className="fw-bold">TOTAL:</Col>
+            <Col className="text-end fw-bold">Rs.2,200.00</Col>
+          </Row>
 
-                                <div className="d-flex align-items-center border px-2" style={{ width: "fit-content", border: "1px solid #ccc",height:"38px" }}>
-                                    <Button
-                                        variant="light"
-                                        size="sm"
-                                        style={{
-                                            
-                                            height: "30px",
-                                            width: "15px",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            fontSize: "18px",
-                                            background: "white"
-                                        }}
-                                    >
-                                        −
-                                    </Button>
+          <Link to="/checkout" state={{ product }}>
 
-                                    <span className="px-3" style={{ fontSize: "17px", minWidth: "30px", textAlign: "center" }}>
-                                        1
-                                    </span>
+          <Button onClick={handleBuyNow}  className="w-100 mt-3 mb-1" style={{ backgroundColor: "#f9a8d4", border: "none",fontWeight:"bold",fontSize: "0.875rem",padding:"8px" }}>
+            PROCEED TO CHECKOUT
+          </Button>
 
-                                    <Button
-                                        variant="light"
-                                        size="sm"
-                                        style={{
-                                           
-                                            height: "30px",
-                                            width: "15px",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            fontSize: "18px",
-                                            background: "white"
-                                        }}
-                                    >
-                                        +
-                                    </Button>
-                                </div>
+          </Link >
+          <Link to="/">
+          <Button className="w-100 mt-2" style={{ backgroundColor: "#f9a8d4", border: "none",fontWeight:"bold",fontSize: "0.875rem",padding:"8px" }}>
+            CONTINUE SHOPPING
+          </Button>
+          </Link>
+        </Col>
 
-                            </Col>
-
-
-                        </Row>
-
-                        {/* Subtotal */}
-                        <Row className="border-top pt-3">
-                            <Col className="d-flex justify-content-between">
-                                <span>Subtotal:</span>
-                                <span>Rs.13,813.00</span>
-                            </Col>
-                        </Row>
-                        <Row className="mb-3">
-                            <Col className="d-flex justify-content-between">
-                                <strong>Total:</strong>
-                                <strong>Rs.13,813.00</strong>
-                            </Col>
-                        </Row>
-
-                        {/* Buttons */}
-                        <Button className="w-100 mb-3" style={{ backgroundColor: '#F8A8C2', border: 'none',fontWeight:"bold" }}>
-                            CHECKOUT
-                        </Button>
-                        <Button className="w-100" style={{ backgroundColor: '#F8A8C2', border: 'none' ,fontWeight:"bold"}}>
-                            VIEW CART
-                        </Button>
-                    </Container>
-                </Offcanvas.Body>
-            </Offcanvas>
-        </>
-    );
+        {/* Empty Space for Balance */}
+        {/* <Col xs={12} lg={1}></Col> */}
+      </Row>
+    </Container>
+  );
 };
 
-export default MyBag;
+export default Cart;

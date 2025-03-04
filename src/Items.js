@@ -1,9 +1,11 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Button} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import {FaShoppingCart} from "react-icons/fa";
 
 const Items = ({ img, product_name, newprice, oldprice, discount }) => {
+  
   return (
     <div className="card mx-auto border-0 hover:shadow-xl" style={{ width: "13rem" }}>
       <div className="position-relative">

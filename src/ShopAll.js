@@ -241,7 +241,7 @@ function ShopAll() {
         </Col>
         <Col md={8} lg={8}>
           <Row>
-            <hr /><br /><br /><br />
+            <hr className="hidden md:block" /><br /><br /><br />
             {filteredProducts.length > 0 ? (
               filteredProducts.map((product, index) => (
                 <Col
